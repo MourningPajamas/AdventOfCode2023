@@ -1,17 +1,26 @@
-sum = 0
+import regex as re
 
-with open('01\Part1\input.txt', 'r') as input_file:
+def number_solver(word: str) -> int:
+    """
+    Finds the numbers in the word and returns the two digit value using the problem criteria
+
+    Args:
+        word: String that may contain numbers
+
+    Return:
+        Two digit value using problem criteria
+    """
+    numbers = re.findall(r'[1-9]', word, overlapped=True)
+
+    value = numbers[0] + numbers[-1]
+
+    return int(value)
+
+
+with open('input.txt', 'r') as input_file:
+    total = 0
+
     for word in input_file:
-        letters_list = []
-        two_digit_string = ""
-        for letter in word:
-            if letter.isdigit():
-                letters_list.append(letter)
-        if len(letters_list) == 1:
-           two_digit_string = letters_list[0] + letters_list[0] 
-        elif len(letters_list) != 0:
-            two_digit_string = letters_list[0] + letters_list[-1]
+        total += number_solver(word)
 
-        sum += int(two_digit_string)
-
-print(sum) 
+    print(total)
